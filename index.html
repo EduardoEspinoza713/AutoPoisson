@@ -65,15 +65,15 @@
     
     <div class="flex justify-center">
       <div class="bg-slate-900 p-1.5 rounded-xl border border-slate-800 inline-flex shadow-inner">
-        <button id="tab-hpp" onclick="switchMode('HPP')" 
+        <button id="tab-hpp" onclick="switchMode('PPH')" 
           class="flex items-center space-x-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 bg-brand-600 text-white shadow-md">
           <i data-lucide="activity" class="w-4 h-4"></i>
-          <span>Homogéneo (HPP)</span>
+          <span>Homogéneo (PPH)</span>
         </button>
-        <button id="tab-nhpp" onclick="switchMode('NHPP')" 
+        <button id="tab-nhpp" onclick="switchMode('PPNH')" 
           class="flex items-center space-x-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white">
           <i data-lucide="trending-up" class="w-4 h-4"></i>
-          <span>No Homogéneo (NHPP)</span>
+          <span>No Homogéneo (PPNH)</span>
         </button>
       </div>
     </div>
@@ -85,7 +85,7 @@
         <div id="panel-hpp" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
           <div class="flex items-center justify-between border-b border-slate-800 pb-4">
             <h2 class="text-lg font-semibold flex items-center gap-2">
-              <i data-lucide="sliders" class="w-5 h-5 text-brand-500"></i> Entrada HPP
+              <i data-lucide="sliders" class="w-5 h-5 text-brand-500"></i> Entrada PPH
             </h2>
             <span class="tex-render text-xs bg-slate-800 text-cyan-400 px-2 py-1 rounded border border-slate-700" data-tex="\lambda = \text{cte}"></span>
           </div>
@@ -126,14 +126,14 @@
           <button onclick="calculateHPP()" 
             class="w-full bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 rounded-lg shadow-lg shadow-brand-600/20 transition-all flex items-center justify-center space-x-2">
             <i data-lucide="play" class="w-4 h-4"></i>
-            <span>Calcular HPP</span>
+            <span>Calcular PPH</span>
           </button>
         </div>
 
         <div id="panel-nhpp" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
           <div class="flex items-center justify-between border-b border-slate-800 pb-4">
             <h2 class="text-lg font-semibold flex items-center gap-2">
-              <i data-lucide="sliders" class="w-5 h-5 text-brand-500"></i> Entrada NHPP
+              <i data-lucide="sliders" class="w-5 h-5 text-brand-500"></i> Entrada PPNH
             </h2>
             <span class="tex-render text-xs bg-slate-800 text-cyan-400 px-2 py-1 rounded border border-slate-700" data-tex="\lambda = \lambda(t)"></span>
           </div>
@@ -180,7 +180,7 @@
           <button onclick="calculateNHPP()" 
             class="w-full bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 rounded-lg shadow-lg shadow-brand-600/20 transition-all flex items-center justify-center space-x-2">
             <i data-lucide="play" class="w-4 h-4"></i>
-            <span>Calcular NHPP</span>
+            <span>Calcular PPNH</span>
           </button>
         </div>
 
@@ -244,12 +244,12 @@
 
   <footer class="border-t border-slate-800 bg-slate-900 py-4 mt-auto">
     <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-      AutoPoisson • Herramienta Interactiva de Procesos Estocásticos • UNAN-León • ISI • 2026
+      AutoPoisson • Herramienta Interactiva de Procesos Estocásticos • UNAN-León • ISI • 2026 V3
     </div>
   </footer>
 
   <script>
-    let activeMode = 'HPP';
+    let activeMode = 'PPH';
     let chartInstance = null;
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -284,7 +284,7 @@
 
       errorBox.classList.add('hidden');
 
-      if (mode === 'HPP') {
+      if (mode === 'PPH') {
         tabHPP.className = "flex items-center space-x-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 bg-brand-600 text-white shadow-md";
         tabNHPP.className = "flex items-center space-x-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white";
         panelHPP.classList.remove('hidden');
@@ -351,7 +351,7 @@
 
       renderMathExpression('formula-display', `P(N(${t}) = ${k}) = \\frac{(\\lambda t)^{${k}} e^{-\\lambda t}}{${k}!} = \\frac{(${mean.toFixed(2)})^{${k}} e^{-${mean.toFixed(2)}}}{${k}!} = ${pK.toFixed(6)}`);
 
-      document.getElementById('chart-title').innerText = "Distribución de Probabilidad PMF (HPP)";
+      document.getElementById('chart-title').innerText = "Distribución de Probabilidad PMF (PPH)";
       document.getElementById('chart-badge').innerText = `λt = ${mean.toFixed(2)}`;
 
       renderHPPChart(mean, k);
