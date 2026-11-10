@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AutoPoisson - Calculadora de Procesos de Poisson</title>
   
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -27,17 +26,13 @@
     }
   </script>
 
-  <!-- KaTeX (Renderizado Matemático) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
 
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Math.js (Parser Simbólico y Evaluador) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
 
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -47,7 +42,6 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased flex flex-col">
 
-  <!-- Header -->
   <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
@@ -67,10 +61,8 @@
     </div>
   </header>
 
-  <!-- Main Content -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
     
-    <!-- Selector de Modo -->
     <div class="flex justify-center">
       <div class="bg-slate-900 p-1.5 rounded-xl border border-slate-800 inline-flex shadow-inner">
         <button id="tab-hpp" onclick="switchMode('HPP')" 
@@ -88,10 +80,8 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       
-      <!-- Panel de Controles / Inputs -->
       <div class="lg:col-span-5 space-y-6">
         
-        <!-- HPP Panel -->
         <div id="panel-hpp" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
           <div class="flex items-center justify-between border-b border-slate-800 pb-4">
             <h2 class="text-lg font-semibold flex items-center gap-2">
@@ -140,7 +130,6 @@
           </button>
         </div>
 
-        <!-- NHPP Panel -->
         <div id="panel-nhpp" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
           <div class="flex items-center justify-between border-b border-slate-800 pb-4">
             <h2 class="text-lg font-semibold flex items-center gap-2">
@@ -195,7 +184,6 @@
           </button>
         </div>
 
-        <!-- Banner de Mensaje / Error -->
         <div id="error-box" class="hidden bg-rose-950/50 border border-rose-800 text-rose-300 rounded-xl p-4 text-sm flex items-start space-x-3">
           <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-500 shrink-0 mt-0.5"></i>
           <span id="error-text"></span>
@@ -203,10 +191,8 @@
 
       </div>
 
-      <!-- Panel de Resultados y Gráficas -->
       <div class="lg:col-span-7 space-y-6">
         
-        <!-- Tarjetas KPI / Métricas (3 columnas ahora) -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-md">
             <span class="text-xs text-slate-400 font-medium">Probabilidad Exacta <span class="tex-render" data-tex="P(N=k)"></span></span>
@@ -224,7 +210,6 @@
           </div>
         </div>
 
-        <!-- Sección de Fórmulas y Paso a Paso -->
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3 text-slate-300">
           <div id="integral-display-container" class="hidden pb-2 border-b border-slate-800 flex items-center justify-between">
             <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">Intensidad Acumulada:</span>
@@ -236,7 +221,6 @@
           </div>
         </div>
 
-        <!-- Gráfica Interactiva -->
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
           <div class="flex items-center justify-between">
             <h3 id="chart-title" class="text-md font-semibold flex items-center gap-2">
@@ -264,7 +248,6 @@
     </div>
   </footer>
 
-  <!-- Lógica JavaScript -->
   <script>
     let activeMode = 'HPP';
     let chartInstance = null;
@@ -272,7 +255,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       lucide.createIcons();
       renderAllMath();
-      calculateHPP(); // Ejecución inicial por defecto
+      calculateHPP();
     });
 
     function renderAllMath() {
@@ -329,7 +312,6 @@
       document.getElementById('error-box').classList.add('hidden');
     }
 
-    // Funciones matemáticas auxiliares
     function factorial(n) {
       if (n === 0 || n === 1) return 1;
       let res = 1;
@@ -341,7 +323,6 @@
       return (Math.pow(lambdaVal, k) * Math.exp(-lambdaVal)) / factorial(k);
     }
 
-    // Formatear expresión JS a formato LaTeX bonito para KaTeX
     function convertToTexExpression(exprStr) {
       return exprStr
         .replace(/\*/g, ' \\cdot ')
@@ -350,7 +331,6 @@
         .replace(/exp\((.*?)\)/g, 'e^{$1}');
     }
 
-    // --- CÁLCULO HPP ---
     function calculateHPP() {
       hideError();
       const lambda = parseFloat(document.getElementById('hpp-lambda').value);
@@ -365,12 +345,10 @@
       const mean = lambda * t;
       const pK = poissonPMF(k, mean);
 
-      // Actualizar KPIs
       document.getElementById('kpi-pk').innerText = (pK * 100).toFixed(2) + '%';
       document.getElementById('kpi-mean').innerText = mean.toFixed(3);
       document.getElementById('kpi-var').innerText = mean.toFixed(3);
 
-      // Renderizar la fórmula envolviendo explícitamente exponentes entre {}
       renderMathExpression('formula-display', `P(N(${t}) = ${k}) = \\frac{(\\lambda t)^{${k}} e^{-\\lambda t}}{${k}!} = \\frac{(${mean.toFixed(2)})^{${k}} e^{-${mean.toFixed(2)}}}{${k}!} = ${pK.toFixed(6)}`);
 
       document.getElementById('chart-title').innerText = "Distribución de Probabilidad PMF (HPP)";
@@ -379,7 +357,6 @@
       renderHPPChart(mean, k);
     }
 
-    // --- CÁLCULO NHPP ---
     function calculateNHPP() {
       hideError();
       const fnStr = document.getElementById('nhpp-lambda-fn').value.trim();
@@ -387,7 +364,6 @@
       const t2 = parseFloat(document.getElementById('nhpp-t2').value);
       const k = parseInt(document.getElementById('nhpp-k').value);
 
-      // Validación estricta de la presencia de la variable 't'
       if (!/\bt\b/.test(fnStr)) {
         showError("Restricción incumplida: La expresión de la tasa λ(t) debe contener la variable 't'.");
         return;
@@ -407,8 +383,7 @@
         return;
       }
 
-      // Integración Numérica (Regla de Simpson de 1/3)
-      const N = 200; // Pasos de integración
+      const N = 200;
       const h = (t2 - t1) / N;
       let sum = 0;
       let hasNegative = false;
@@ -433,7 +408,7 @@
         sum += (i % 2 === 0) ? 2 * val : 4 * val;
       }
 
-      const CapitalLambda = (h / 3) * sum; // Intensidad Acumulada Λ(t1, t2)
+      const CapitalLambda = (h / 3) * sum;
 
       if (hasNegative) {
         showError("Advertencia: Se detectaron valores negativos en λ(t) dentro del intervalo [t₁, t₂]. La tasa debe ser ≥ 0.");
@@ -447,16 +422,13 @@
 
       const pK = poissonPMF(k, CapitalLambda);
 
-      // Actualizar KPIs
       document.getElementById('kpi-pk').innerText = (pK * 100).toFixed(2) + '%';
       document.getElementById('kpi-mean').innerText = CapitalLambda.toFixed(3);
       document.getElementById('kpi-var').innerText = CapitalLambda.toFixed(3);
 
-      // Renderizar integral explícita con la expresión convertida
       const texFn = convertToTexExpression(fnStr);
       renderMathExpression('integral-display', `\\Lambda(${t1}, ${t2}) = \\int_{${t1}}^{${t2}} \\left(${texFn}\\right) dt = ${CapitalLambda.toFixed(3)}`);
 
-      // Renderizar fórmula con superíndices corregidos entre {}
       renderMathExpression('formula-display', `P(N(${t2})-N(${t1}) = ${k}) = \\frac{\\Lambda^{${k}} e^{-\\Lambda}}{${k}!} = \\frac{(${CapitalLambda.toFixed(2)})^{${k}} e^{-${CapitalLambda.toFixed(2)}}}{${k}!} = ${pK.toFixed(6)}`);
 
       document.getElementById('chart-title').innerText = "Perfil Temporal de Tasa λ(t) y Región Evaluada";
@@ -465,7 +437,6 @@
       renderNHPPChart(compiledFn, t1, t2);
     }
 
-    // --- RENDERIZADO DE GRÁFICOS ---
     function renderHPPChart(mean, targetK) {
       const ctx = document.getElementById('poissonChart').getContext('2d');
       if (chartInstance) chartInstance.destroy();
